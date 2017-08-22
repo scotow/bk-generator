@@ -1,32 +1,25 @@
+function grammar(number) {
+    switch(number) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+    }
+}
+
 $(function() {
-    function onError() {
-        $('.loader > .video').remove();
-        $('.loader > .label').text('An error has occurred. Sorry.');
-    }
+    const socket = io.connect();
+    socket.emit('request');
 
-    function getCode() {
-        $.ajax(
-            {
-                url: '/code',
-                method: 'POST',
-                success: function(data) {
-                    switch(data.status) {
-                        case 'success':
-                            $('.loader > .label').addClass('done').text(data.code);
-                            break;
-                        case 'waiting':
-                            $('.loader > .label').text('A Burger is already generating. Please wait a bit.');
-                            setTimeout(getCode, 3 * 1e3);
-                            break;
-                        default:
-                            onError();
-                            break;
-                    }
-                },
-                error: onError
-            }
+    socket.on('queue', function(data) {
+        $('.loader > .label').text(
+            data.position === 1
+            ? 'Loading your Burger'
+            : 'You are ' + data.position + grammar(data.position) + '\nin the Free Burger queue'
         );
-    }
+    });
 
-    getCode();
+    socket.on('code', function(data) {
+        $('.loader > .label').addClass('done').text(data.code);
+    });
 });
