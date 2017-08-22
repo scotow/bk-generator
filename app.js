@@ -21,7 +21,10 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         let placeInQueue = queue.indexOf(socket);
-        if(~placeInQueue) queue.splice(placeInQueue, 1);
+        if(~placeInQueue) {
+            queue.splice(placeInQueue, 1);
+            sendQueueUpdate();
+        }
     });
 });
 
@@ -59,9 +62,7 @@ function generateCode() {
 
         // Generate another code if needed.
         if(queue.length) {
-            queue.forEach(socket => {
-                socket.emit('queue', {position: queue.length});
-            });
+            sendQueueUpdate();
             setTimeout(generateCode, 500);
         }
     });
@@ -76,6 +77,12 @@ function codeGenerated(code) {
     } else {
         codePool.push(code);
     }
+}
+
+function sendQueueUpdate() {
+    queue.forEach(socket => {
+        socket.emit('queue', {position: queue.length});
+    });
 }
 
 server.listen(PORT, function () {
