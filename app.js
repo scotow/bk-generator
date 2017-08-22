@@ -34,7 +34,6 @@ function askCode(socket) {
         let code = codePool.shift();
         if(Date.now() < code.creation + VALIDATION_LIMIT) {
             socket.emit('code', code);
-            socket.close();
             return;
         }
     }
@@ -75,7 +74,6 @@ function codeGenerated(code) {
     if(queue.length) {
         let socket = queue.shift();
         socket.emit('code', code);
-        socket.close();
     } else {
         codePool.push(code);
     }
