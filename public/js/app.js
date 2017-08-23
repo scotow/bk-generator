@@ -12,11 +12,11 @@ $(function() {
     socket.emit('request');
 
     socket.on('queue', function(data) {
-        $('.loader > .label').text(
-            data.position === 1
-            ? 'Loading your Burger'
-            : 'You are ' + data.position + grammar(data.position) + '\nin the Free Burger queue'
-        );
+        if(data.position === 1) {
+            $('.loader > .label').text('Loading your Burger');
+        } else {
+            $('.loader > .label').html('You\'re ' + data.position + grammar(data.position) + ' in the<br>Free Burger queue');
+        }
     });
 
     socket.on('code', function(data) {
