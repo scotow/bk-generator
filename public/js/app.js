@@ -22,5 +22,6 @@ $(function() {
     socket.on('code', function(data) {
         $('.loader > .label').addClass('done').text(data.code);
         document.title = data.code;
+        new Audio('sounds/burger.m4a').play();
     });
 });
