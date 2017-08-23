@@ -80,8 +80,8 @@ function codeGenerated(code) {
 }
 
 function sendQueueUpdate() {
-    queue.forEach(socket => {
-        socket.emit('queue', {position: queue.length});
+    queue.forEach((socket, index) => {
+        socket.emit('queue', {position: index + 1});
     });
 }
 
