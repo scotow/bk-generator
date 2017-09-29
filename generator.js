@@ -2,11 +2,17 @@
 var MAX_ATTEMPTS = 50;
 var attempts = 0;
 
+var SURVEY_CODES = [22365, 23911];
+
 // Utils
 function pad(num, size) {
     var it = String(num);
     while (it.length < size) it = '0' + it;
     return it;
+}
+
+function randomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
 }
 
 var casper = require('casper').create();
@@ -24,7 +30,7 @@ casper.then(function() {
     var year = date.getUTCFullYear();
 
     this.fillSelectors('#surveyEntryForm', {
-        '#SurveyCode':	'22365',
+        '#SurveyCode':	String(randomElement(SURVEY_CODES)),
         '#InputDay':	String(day),
         '#InputMonth':	pad(month, 2),
         '#InputYear':	String(year).slice(-2),
