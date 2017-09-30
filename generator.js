@@ -2,7 +2,11 @@
 var MAX_ATTEMPTS = 50;
 var attempts = 0;
 
-var SURVEY_CODES = [22365, 23911];
+var SURVEY_CODES = [
+    22365,  // Auchan Leers - Leers
+    23911,  // Auchan v2 - Villeneuve d'Ascq
+    21109   // Euralille - Lille
+];
 
 // Utils
 function pad(num, size) {
