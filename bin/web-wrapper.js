@@ -52,11 +52,11 @@ function generateCode() {
     surveying = true;
 
     function continueIfNeeded() {
+        // Set state to ready.
+        surveying = false;
         // Generate another code if needed.
         if(queue.length) {
             sendQueueUpdate();
-            // Set state to ready.
-            surveying = false;
             setTimeout(generateCode, 500);
         }
     }
