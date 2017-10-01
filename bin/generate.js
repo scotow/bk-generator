@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 require('../lib/generator.js').generateCode()
 .then((code) => {
     console.log(code);

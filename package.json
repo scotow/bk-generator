@@ -1,11 +1,11 @@
 {
-  "name": "bk.scotow.com",
+  "name": "bk-generator",
   "version": "1.0.0",
   "description": "Burger King Free Burger Generator",
   "main": "index.js",
   "bin": {
     "bk-code": "./bin/generate.js",
-    "bk-web-server": "./bin/web-wrapper.js"  
+    "bk-web-server": "./bin/web-wrapper.js"
   },
   "scripts": {
     "install": "echo \"Modify (if needed) your casperjs path in 'lib/generator.js' to ba able to use this package.\"",

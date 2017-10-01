@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const generator = require('../lib/generator.js');
 const express = require('express');
 const app = express();
