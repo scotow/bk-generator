@@ -9,7 +9,7 @@ const io = require('socket.io')(server);
 const PORT = 4002;
 const VALIDATION_LIMIT = 24 * 60 * 60 * 1e3; // 24h.
 
-app.use(express.static(__dirname + '../public'));
+app.use(express.static(__dirname + '/../public'));
 
 let codePool = [];
 let queue = [];
