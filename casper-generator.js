@@ -19,6 +19,7 @@ function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
+// Main
 var casper = require('casper').create();
 
 casper.start('https://www.bkvousecoute.fr');
@@ -38,7 +39,7 @@ casper.then(function() {
         '#InputDay':	String(day),
         '#InputMonth':	pad(month, 2),
         '#InputYear':	String(year).slice(-2),
-        '#InputHour':	'12',
+        '#InputHour':	String(12 + Math.floor(Math.random() * 3)),
         '#InputMinute': String(10 + Math.floor(Math.random() * 25))
     }, false);
 

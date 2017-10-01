@@ -24,4 +24,8 @@ $(function() {
         document.title = data.code;
         new Audio('sounds/burger.m4a').play();
     });
+
+    socket.on('error', function() {
+        $('.loader > .label').removeClass('done').text('An error has occured. Feel free to send me an email at \'contact@scotow.com\' to help me improve this project.');
+    });
 });

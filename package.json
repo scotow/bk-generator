@@ -2,9 +2,18 @@
   "name": "bk.scotow.com",
   "version": "1.0.0",
   "description": "Burger King Free Burger Generator",
-  "main": "app.js",
+  "main": "index.js",
+  "bin": {
+    "bk-code": "./bin/generate.js",
+    "bk-web-server": "./bin/web-wrapper.js"  
+  },
   "scripts": {
+    "install": "echo \"Modify (if needed) your casperjs path in 'lib/generator.js' to ba able to use this package.\"",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Scotow/bk-generator.git"
   },
   "author": "Scotow",
   "license": "ISC",

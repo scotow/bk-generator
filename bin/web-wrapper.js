@@ -1,12 +1,11 @@
-const shell = require('shelljs');
-const express = require('express')
+const generator = require('../lib/generator.js');
+const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const PORT = 4002;
 const VALIDATION_LIMIT = 24 * 60 * 60 * 1e3; // 24h.
-const CODE_GENERATOR_COMMAND = 'node /root/casperjs/casperjs/bin/casperjs.js /root/casperjs/casperjs/bk-code-generator.js';
 
 app.use(express.static(__dirname + '/public'));
 
@@ -50,21 +49,25 @@ function generateCode() {
 
     surveying = true;
 
-    shell.exec(CODE_GENERATOR_COMMAND, {silent: true}, (code, stdout, stderr) => {
-        // If casperJS succeed.
-        if(code) return;
-
-        // Set state to ready.
-        surveying = false;
-
-        // Send code to the first person in queue, otherwise put it in the pool.
-        codeGenerated({code: stdout.trim(), creation: Date.now()});
-
+    function continueIfNeeded() {
         // Generate another code if needed.
         if(queue.length) {
             sendQueueUpdate();
+            // Set state to ready.
+            surveying = false;
             setTimeout(generateCode, 500);
         }
+    }
+
+    generator.generateCode()
+    .then((code) => {
+        // Send code to the first person in queue, otherwise put it in the pool.
+        codeGenerated({code: code, creation: Date.now()});
+        continueIfNeeded();
+    })
+    .catch(() => {
+        codeGenerationFailed();
+        continueIfNeeded();
     });
 }
 
@@ -79,12 +82,14 @@ function codeGenerated(code) {
     }
 }
 
+function codeGenerationFailed() {
+    if(queue.length) queue.shift().emit('error');
+}
+
 function sendQueueUpdate() {
     queue.forEach((socket, index) => {
         socket.emit('queue', {position: index + 1});
     });
 }
 
-server.listen(PORT, function () {
-    console.log(`bk.scotow.com started on port ${PORT}.`);
-});
+server.listen(PORT, console.log.bind(null, `bk.scotow.com started on port ${PORT}.`));
