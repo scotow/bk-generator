@@ -13,7 +13,7 @@ Head to https://bk.scotow.com to try it out.
 
 ### How to install
 
-`npm install -g https://github.com/Scotow/bk-generator`
+`npm install -g bk-generator`
 
 Modify (if needed) your casperjs path in 'lib/generator.js' to ba able to use this package.
 
