@@ -6,7 +6,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-const PORT = 4002;
+const PORT = process.env.port || 4002;
 const VALIDATION_LIMIT = 24 * 60 * 60 * 1e3; // 24h.
 
 app.use(express.static(__dirname + '/../public'));
@@ -15,7 +15,7 @@ let codePool = [];
 let queue = [];
 let surveying = false;
 
-io.on('connection', socket => {
+io.on('connection', (socket) => {
     socket.on('request', () => {
         askCode(socket);
     });
