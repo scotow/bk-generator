@@ -5,6 +5,6 @@ require('../lib/generator.js').generateCode()
     console.log(code);
 })
 .catch((errorCode) => {
-    console.error(`An error has occured while generating a code. Casper exit code: ${casperErrorCode}`);
+    console.error(`An error has occured while generating a code. Casper exit code: ${errorCode}`);
     process.exit(errorCode);
 });
