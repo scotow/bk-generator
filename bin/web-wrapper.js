@@ -96,7 +96,7 @@ function codeGenerated(code) {
 
 function codeGenerationFailed() {
     if(queue.length) queue.shift().emit('generation-error');
-    stopped = (++successiveErrors >= SUCCESSIVE_ERRORS_REQUIRED));
+    stopped = (++successiveErrors >= SUCCESSIVE_ERRORS_REQUIRED);
 }
 
 function sendQueueUpdate() {
