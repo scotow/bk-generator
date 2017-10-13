@@ -6,8 +6,9 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-const PORT = 4002;
+const PORT = process.env.PORT || 4002;
 const VALIDATION_LIMIT = 24 * 60 * 60 * 1e3; // 24h.
+const SUCCESSIVE_ERRORS_REQUIRED = 5;
 
 app.use(express.static(__dirname + '/../public'));
 
@@ -15,9 +16,17 @@ let codePool = [];
 let queue = [];
 let surveying = false;
 
-io.on('connection', socket => {
+// Errors handling.
+let stopped = false;
+let successiveErrors = 0;
+
+io.on('connection', (socket) => {
     socket.on('request', () => {
-        askCode(socket);
+        if(stopped) {
+            socket.emit('generation-error');
+        } else {
+            askCode(socket);
+        }
     });
 
     socket.on('disconnect', () => {
@@ -74,6 +83,7 @@ function generateCode() {
 }
 
 function codeGenerated(code) {
+    successiveErrors = 0;
     // If someone is waiting for a code, send it to him.
     // Otherwise put it in the pool.
     if(queue.length) {
@@ -85,7 +95,8 @@ function codeGenerated(code) {
 }
 
 function codeGenerationFailed() {
-    if(queue.length) queue.shift().emit('error');
+    if(queue.length) queue.shift().emit('generation-error');
+    stopped = (++successiveErrors >= SUCCESSIVE_ERRORS_REQUIRED);
 }
 
 function sendQueueUpdate() {

@@ -1,13 +1,13 @@
-function grammar(number) {
-    switch(number) {
-        case 1: return 'st';
-        case 2: return 'nd';
-        case 3: return 'rd';
-        default: return 'th';
-    }
-}
-
 $(function() {
+    function grammar(number) {
+        switch(number) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    }
+
     const socket = io.connect();
     socket.emit('request');
 
@@ -25,7 +25,7 @@ $(function() {
         new Audio('sounds/burger.m4a').play();
     });
 
-    socket.on('error', function() {
+    socket.on('generation-error', function() {
         $('.loader > .label').removeClass('done').text('An error has occured. Feel free to send me an email at \'contact@scotow.com\' to help me improve this project.');
     });
 });
