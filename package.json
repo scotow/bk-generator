@@ -1,6 +1,6 @@
 {
   "name": "bk-generator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Burger King Free Burger Generator",
   "main": "index.js",
   "bin": {

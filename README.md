@@ -37,9 +37,11 @@ bkGenerator.generateCode()
     console.log(code);      // A code was successfully generated.
 })
 .catch((errorCode) => {
-    console.log(errorCode);     // An error has occur, an JavasScript Erorr is return.
+    console.log(errorCode);     // An error has occur, the error code of the casperjs command (or bash/sh) is return.
 });
 ```
+
+*NB: An error code of 127 is usually return when bash/sh doesn't find the casperjs command.*
 
 #### Using the built-in commands
 
