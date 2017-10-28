@@ -37,7 +37,7 @@ bkGenerator.generateCode()
     console.log(code);      // A code was successfully generated.
 })
 .catch((errorCode) => {
-    console.log(errorCode);     // An error has occur, the error code of the casperjs command (or bash/sh) is return.
+    console.log(errorCode);     // An error has occurred, the error code of the casperjs command (or bash/sh) is return.
 });
 ```
 
