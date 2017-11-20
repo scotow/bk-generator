@@ -1,26 +1,34 @@
 #!/usr/bin/env node
 
+// Imports.
+// Library.
 const generator = require('../lib/generator.js');
+
+// Utils.
+const ms = require('ms');
+
+// Web server.
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const PORT = process.env.PORT || 4002;
-const VALIDATION_LIMIT = 24 * 60 * 60 * 1e3; // 24h.
+const VALIDATION_LIMIT = ms('1d'); // 24h.
 const SUCCESSIVE_ERRORS_REQUIRED = 5;
 
 app.use(express.static(__dirname + '/../public'));
 
-let codePool = [];
-let queue = [];
+// Generation data.
+const codePool = [];
+const queue = [];
 let surveying = false;
 
 // Errors handling.
 let stopped = false;
 let successiveErrors = 0;
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
     socket.on('request', () => {
         if(stopped) {
             socket.emit('generation-error');
@@ -30,7 +38,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        let placeInQueue = queue.indexOf(socket);
+        const placeInQueue = queue.indexOf(socket);
         if(~placeInQueue) {
             queue.splice(placeInQueue, 1);
             sendQueueUpdate();
@@ -41,7 +49,7 @@ io.on('connection', (socket) => {
 function askCode(socket) {
     // Unstack codes if any and still valid.
     while(codePool.length > 0) {
-        let code = codePool.shift();
+        const code = codePool.shift();
         if(Date.now() < code.creation + VALIDATION_LIMIT) {
             socket.emit('code', code);
             return;
@@ -50,7 +58,7 @@ function askCode(socket) {
 
     // Otherwise queue the client and start generating a new code.
     queue.push(socket);
-    socket.emit('queue', {position: queue.length});
+    socket.emit('queue', { position: queue.length });
     generateCode();
 }
 
@@ -71,9 +79,9 @@ function generateCode() {
     }
 
     generator.generateCode()
-    .then((code) => {
+    .then(code => {
         // Send code to the first person in queue, otherwise put it in the pool.
-        codeGenerated({code: code, creation: Date.now()});
+        codeGenerated({ code: code, creation: Date.now() });
         continueIfNeeded();
     })
     .catch(() => {
@@ -87,7 +95,7 @@ function codeGenerated(code) {
     // If someone is waiting for a code, send it to him.
     // Otherwise put it in the pool.
     if(queue.length) {
-        let socket = queue.shift();
+        const socket = queue.shift();
         socket.emit('code', code);
     } else {
         codePool.push(code);
@@ -101,7 +109,7 @@ function codeGenerationFailed() {
 
 function sendQueueUpdate() {
     queue.forEach((socket, index) => {
-        socket.emit('queue', {position: index + 1});
+        socket.emit('queue', { position: index + 1 });
     });
 }
 

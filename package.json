@@ -1,6 +1,6 @@
 {
   "name": "bk-generator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Burger King Free Burger Generator",
   "main": "index.js",
   "bin": {
@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.15.4",
+    "ms": "^2.0.0",
     "shelljs": "^0.7.8",
     "socket.io": "^2.0.3"
   }
