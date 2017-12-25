@@ -5,7 +5,9 @@ var attempts = 0;
 var SURVEY_CODES = [
     22365,  // Auchan Leers - Leers
     23911,  // Auchan v2 - Villeneuve d'Ascq
-    21109   // Euralille - Lille
+    21109,  // Euralille - Lille
+    19974,  // Gare Saint-Lazare - Paris
+    24191,  // Zone Commerciale Grand Tour 2 - Sainte-Eulalie
 ];
 
 // Utils
