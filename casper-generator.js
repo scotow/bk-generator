@@ -8,6 +8,7 @@ var SURVEY_CODES = [
     21109,  // Euralille - Lille
     19974,  // Gare Saint-Lazare - Paris
     24191,  // Zone Commerciale Grand Tour 2 - Sainte-Eulalie
+    22118,  // Zone Commerciale de l'Épinette - Seclin
 ];
 
 // Utils
