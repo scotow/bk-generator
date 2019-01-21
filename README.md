@@ -1,3 +1,5 @@
+⚠️ bk-generator is deprecated and no more maintained. Please refer to Scotow/burgoking ⚠️
+
 # bk-generator
 🍔 **Burger King - Free Burger Code Generator** 🍔
 
