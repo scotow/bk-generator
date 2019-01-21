@@ -63,4 +63,8 @@ Furthermore, if you went to restaurant which its number isn't in the restaurants
 
 I assumes no responsibility or liability for the use of the software, conveys no license or title under any patent, copyright, or mask work right to the product.
 
+### Golang version
+
+A newer version of this project made with Golang is availiable [here](https://github.com/Scotow/burgoking).
+
 ***Enjoy your meal!***
