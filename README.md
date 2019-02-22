@@ -1,4 +1,4 @@
-⚠️ bk-generator is deprecated and no more maintained. Please refer to Scotow/burgoking ⚠️
+⚠️ bk-generator is deprecated and no more maintained. Please refer to [scotow/burgoking](https://github.com/Scotow/bk-generator) ⚠️
 
 # bk-generator
 🍔 **Burger King - Free Burger Code Generator** 🍔
